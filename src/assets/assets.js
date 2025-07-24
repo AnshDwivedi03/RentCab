@@ -177,7 +177,60 @@ export const dummyCarData = [
         "description": "This is a mid-size luxury sedan produced by Toyota. The Corolla made its debut in 2008 as the first sedan ever produced by Toyota.",
         "isAvaliable": true,
         "createdAt": "2025-04-17T06:15:47.318Z",
-    }
+    },
+    
+  {
+    "_id": "6800a512a3f5fc6338ea7e35",
+    "owner": "67fe3467ed8a8fe17d0ba6e2",
+    "brand": "Audi",
+    "model": "A4",
+    "image": car_image1,
+    "year": 2020,
+    "category": "Sedan",
+    "seating_capacity": 5,
+    "fuel_type": "Petrol",
+    "transmission": "Automatic",
+    "pricePerDay": 180,
+    "location": "San Francisco",
+    "description": "The Audi A4 is a compact executive car known for its technology, luxury, and smooth handling.",
+    "isAvaliable": true,
+    "createdAt": "2025-04-17T08:22:30.152Z"
+  },
+  {
+    "_id": "6800a89da3f5fc6338ea7e36",
+    "owner": "67fe3467ed8a8fe17d0ba6e2",
+    "brand": "Tesla",
+    "model": "Model 3",
+    "image": car_image2,
+    "year": 2023,
+    "category": "Sedan",
+    "seating_capacity": 5,
+    "fuel_type": "Electric",
+    "transmission": "Automatic",
+    "pricePerDay": 250,
+    "location": "Austin",
+    "description": "The Tesla Model 3 is an electric car offering high-tech features, autopilot, and zero emissions.",
+    "isAvaliable": true,
+    "createdAt": "2025-04-18T09:12:10.427Z"
+  },
+  {
+    "_id": "6800ac4fa3f5fc6338ea7e37",
+    "owner": "67fe3467ed8a8fe17d0ba6e2",
+    "brand": "Mercedes-Benz",
+    "model": "GLC",
+    "image": car_image3,
+    "year": 2022,
+    "category": "SUV",
+    "seating_capacity": 5,
+    "fuel_type": "Diesel",
+    "transmission": "Automatic",
+    "pricePerDay": 270,
+    "location": "Seattle",
+    "description": "The Mercedes-Benz GLC is a luxury compact SUV combining elegant design with performance and comfort.",
+    "isAvaliable": true,
+    "createdAt": "2025-04-18T11:02:48.120"
+  }
+
 ];
 
 export const dummyMyBookingsData = [
