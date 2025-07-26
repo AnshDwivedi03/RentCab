@@ -51,7 +51,7 @@ const MyBookings = () => {
                   className={`px-3 py-1 text-xs rounded-full ${
                     booking.status === "confirmed"
                       ? "bg-green-400/15 text-green-600"
-                      : "br-red-400/15 text-red-600"
+                      : "bg-red-400/15 text-red-600"
                   }`}
                 >
                   {booking.status}
