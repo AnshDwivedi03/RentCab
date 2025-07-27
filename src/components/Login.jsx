@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState } from "react";
 
 const Login = ({ setShowLogin }) => {
+  const [state, setState] = useState("login");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmitHandle = async (e) => {
+    e.preventDefault();
+    console.log("Submitted:", { email, password });
+    // TODO: Add API call or validation logic here
+  };
+
   return (
     <div
       onClick={() => setShowLogin(false)}
@@ -21,7 +32,10 @@ const Login = ({ setShowLogin }) => {
 
         {/* Right Form Section */}
         <div className="w-full flex flex-col items-center justify-center">
-          <form className="md:w-96 w-80 flex flex-col items-center justify-center">
+          <form
+            onSubmit={onSubmitHandle}
+            className="md:w-96 w-80 flex flex-col items-center justify-center"
+          >
             <h2 className="text-4xl text-gray-900 font-medium">Sign in</h2>
             <p className="text-sm text-gray-500/90 mt-3">
               Welcome back! Please sign in to continue
@@ -41,7 +55,9 @@ const Login = ({ setShowLogin }) => {
             {/* Divider */}
             <div className="flex items-center gap-4 w-full my-5">
               <div className="w-full h-px bg-gray-300/90"></div>
-              <p className="w-full text-nowrap text-sm text-gray-500/90">or sign in with email</p>
+              <p className="w-full text-nowrap text-sm text-gray-500/90">
+                or sign in with email
+              </p>
               <div className="w-full h-px bg-gray-300/90"></div>
             </div>
 
@@ -64,6 +80,8 @@ const Login = ({ setShowLogin }) => {
               <input
                 type="email"
                 placeholder="Email id"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="bg-transparent text-gray-500/80 placeholder-gray-500/80 outline-none text-sm w-full h-full"
                 required
               />
@@ -86,6 +104,8 @@ const Login = ({ setShowLogin }) => {
               <input
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="bg-transparent text-gray-500/80 placeholder-gray-500/80 outline-none text-sm w-full h-full"
                 required
               />
@@ -114,7 +134,7 @@ const Login = ({ setShowLogin }) => {
 
             {/* Signup link */}
             <p className="text-gray-500/90 text-sm mt-4">
-              Don’t have an account?{' '}
+              Don’t have an account?{" "}
               <a className="text-indigo-400 hover:underline" href="#">
                 Sign up
               </a>
