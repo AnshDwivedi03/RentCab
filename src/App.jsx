@@ -11,14 +11,15 @@ import Layout from "./pages/owner/Layout"
 import AddCar from "./pages/owner/AddCar";
 import ManageCars from './pages/owner/ManageCar'
 import ManageBookings from './pages/owner/ManageBookings'
+import Login from "./components/Login";
     
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   const isOnwerPath = useLocation().pathname.startsWith("/owner");
   return (
     <>
+     {showLogin && <Login setShowLogin={setShowLogin} />}
       {!isOnwerPath && <Navbar setShowLogin={setShowLogin} />}
-
       <Routes>
        <Route path="/" element={<Home/>}/>
        <Route path="/car-details/:id" element={<CarDetails/>}/>
@@ -26,7 +27,7 @@ const App = () => {
        <Route path="/my-bookings" element={<MyBookings/>}/>
       {/*Route inside route */}
        <Route path="/owner" element={<Layout/>}>
-       <Route index element={<Dashboard/>}/>
+       <Route index element={<Dashboard/>}/>+
        <Route path="add-car" element={<AddCar/>}/>
        <Route path="manage-cars" element={<ManageCars/>}/>
        <Route path="manage-bookings" element={<ManageBookings/>}/>
