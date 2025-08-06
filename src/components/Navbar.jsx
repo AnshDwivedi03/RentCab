@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
 const Navbar = () => {
-  const { setShowLogin, user, logout, isOnwer, axios, setIsOwner } =
+  const { setShowLogin, user, logout, isOwner, axios, setIsOwner } =
     useAppContext();
   const location = useLocation();
   const [open, setOpen] = useState(false);
@@ -57,7 +57,7 @@ const Navbar = () => {
             }}
             className="cursor-pointer"
           >
-            {isOnwer ? "Dashboard" : "List Cars"}
+            {isOwner ? "Dashboard" : "List Cars"}
           </button>
           <button
             onClick={() => {

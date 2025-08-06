@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 export const AppContext = createContext();
 
@@ -46,7 +45,7 @@ export const AppProvider = ({ children }) => {
 
   //Function to logout the user
   const logout = () => {
-    Cookies.remove("token");
+    localStorage.removeItem("token");
     setToken(null);
     setUser(null);
     setIsOwner(false);
@@ -56,7 +55,7 @@ export const AppProvider = ({ children }) => {
 
   //use Effect to receive the token from cookie
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = localStorage.getItem("token");
     setToken(token);
     fetchCars();
   }, []);
