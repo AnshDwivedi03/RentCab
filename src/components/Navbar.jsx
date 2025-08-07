@@ -53,7 +53,7 @@ const Navbar = () => {
         <div className="flex max-sm:flex-col item-start sm:items-center gap-6">
           <button
             onClick={() => {
-              isOnwer ? navigate("/owner") : changeRole();
+              isOwner ? navigate("/owner") : changeRole();
             }}
             className="cursor-pointer"
           >

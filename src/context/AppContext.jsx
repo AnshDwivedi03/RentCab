@@ -21,11 +21,11 @@ export const AppProvider = ({ children }) => {
   //Function to check if user is logged in..
   const fetchUser = async () => {
     try {
-      const { data } = axios.get("/api/user/data");
-      if (data.success) {
-        setUser(data.user);
-        setIsOwner(data.user.role === "owner");
-      } else {
+      const { data } = await axios.get("/api/user/data");
+     if (data.success && data.user) {
+  setUser(data.user);
+  setIsOwner(data.user.role === "owner");
+} else {
         navigate("/");
       }
     } catch (error) {
