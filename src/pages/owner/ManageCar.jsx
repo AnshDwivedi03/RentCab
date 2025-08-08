@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { assets, dummyCarData } from "../../assets/assets";
+import { assets } from "../../assets/assets";
 import Title from "../../components/owner/Title";
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 const ManageCar = () => {
+  const { isOwner, axios, currency } = useAppContext();
   const [cars, setCars] = useState([]);
   const fetchOwnerCars = async () => {
-    setCars(dummyCarData);
+    try {
+      const { data } = await axios.get("/api/owner/cars");
+      if (data.success) {
+        setCars(data.cars);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   useEffect(() => {
-    fetchOwnerCars();
-  }, []);
+    isOwner && fetchOwnerCars();
+  }, [isOwner]);
 
   return (
     <div className="px-4 pt-10 md:px-10 w-full">
@@ -40,13 +52,13 @@ const ManageCar = () => {
                       {car.brand} {car.model}
                     </p>
                     <p className="font-medium">
-                      {car.seating_capacity} {car.transmission}
+                      {car.seat_capacity} {car.transmission}
                     </p>
                   </div>
                 </td>
 
                 <td className="p-3 max-md:hidden">{car.category}</td>
-                <td className="p-3">{car.pricePerDay}/day</td>
+                <td className="p-3">Rs. { car.pricePerDay}/day</td>
 
                 <td className="p-3 max-md:hidden">
                   <span

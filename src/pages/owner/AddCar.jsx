@@ -13,11 +13,11 @@ const AddCar = () => {
     year: 0,
     pricePerDay: 0,
     category: "",
-    transmission: "", // ✅ fixed typo
+    transmission: "",
     fuel_type: "",
-    seat_capacity: 0, // ✅ fixed typo
+    seat_capacity: 0,
     location: "",
-    description: "", // ✅ fixed typo
+    description: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -191,7 +191,7 @@ const AddCar = () => {
               placeholder="4"
               required
               className="px-3 py-2 mt-1 border borderColor rounded-md outline-none"
-              value={car.seating_capacity}
+              value={car.seat_capacity}
               onChange={(e) =>
                 setCar({ ...car, seat_capacity: e.target.value })
               }
