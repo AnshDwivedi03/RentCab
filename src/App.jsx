@@ -20,7 +20,7 @@ const App = () => {
   const isOnwerPath = useLocation().pathname.startsWith("/owner");
   return (
     <>
-      <Toaster></Toaster>
+      <Toaster/>
       {showLogin && <Login />}
       {!isOnwerPath && <Navbar />}
       <Routes>
