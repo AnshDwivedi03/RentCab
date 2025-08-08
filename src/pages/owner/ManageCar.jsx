@@ -18,6 +18,34 @@ const ManageCar = () => {
       toast.error(error.message);
     }
   };
+  const toggleAvailability = async (carId) => {
+    try {
+      const { data } = await axios.post("/api/owner/toggle-car", { carId });
+      if (data.success) {
+        toast.success(data.message);
+        fetchOwnerCars();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+  const deleteCar = async (carId) => {
+    try {
+      const confirm = window.confirm("Are you sure??");
+      if (!confirm) return null;
+      const { data } = await axios.post("/api/owner/delete-car", { carId });
+      if (data.success) {
+        toast.success(data.message);
+        fetchOwnerCars();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   useEffect(() => {
     isOwner && fetchOwnerCars();
   }, [isOwner]);
@@ -58,7 +86,7 @@ const ManageCar = () => {
                 </td>
 
                 <td className="p-3 max-md:hidden">{car.category}</td>
-                <td className="p-3">Rs. { car.pricePerDay}/day</td>
+                <td className="p-3">Rs. {car.pricePerDay}/day</td>
 
                 <td className="p-3 max-md:hidden">
                   <span
@@ -72,12 +100,13 @@ const ManageCar = () => {
                   </span>
                 </td>
                 <td className="flex items-center p-3">
-                  <img
+                  <img onClick={()=>{toggleAvailability(car._id)}}
                     className="cursor-pointer"
                     src={
                       car.isAvailable ? assets.eye_close_icon : assets.eye_icon
                     }
                   />
+                  <img onClick={()=>{deleteCar(car._id)}} src={assets.delete_icon} className="cursor-pointer" />
                 </td>
               </tr>
             ))}
