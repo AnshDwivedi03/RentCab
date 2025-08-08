@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import Title from "../../components/owner/Title";
 import { assets } from "../../assets/assets";
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
+
 const AddCar = () => {
+  const { axios, currency } = useAppContext();
   const [image, setImage] = useState(null);
   const [car, setCar] = useState({
     brand: "",
@@ -9,15 +13,50 @@ const AddCar = () => {
     year: 0,
     pricePerDay: 0,
     category: "",
-    transimssion: "",
+    transmission: "", // ✅ fixed typo
     fuel_type: "",
-    seating_capacity: 0,
+    seat_capacity: 0, // ✅ fixed typo
     location: "",
-    decription: "",
+    description: "", // ✅ fixed typo
   });
+  const [isLoading, setIsLoading] = useState(false);
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    if (isLoading) return null;
+
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("carData", JSON.stringify(car));
+
+      const { data } = await axios.post("/api/owner/add-car", formData);
+      if (data.success) {
+        toast.success(data.message);
+        setImage(null);
+        setCar({
+          brand: "",
+          model: "",
+          year: 0,
+          pricePerDay: 0,
+          category: "",
+          transmission: "",
+          fuel_type: "",
+          seat_capacity: 0,
+          location: "",
+          description: "",
+        });
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <div className="px-4 py-10 md:px-10 flex-1">
       <Title
@@ -34,7 +73,8 @@ const AddCar = () => {
             <img
               src={image ? URL.createObjectURL(image) : assets.upload_icon}
               className="h-14 rounded cursor-pointer"
-            ></img>
+              alt="Car Preview"
+            />
             <input
               type="file"
               id="car-image"
@@ -44,16 +84,17 @@ const AddCar = () => {
             />
           </label>
           <p className="text-sm text-gray-500">
-            Upload the picture of your class{" "}
+            Upload the picture of your car
           </p>
         </div>
+
         {/* Car Brand Model */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col w-full">
             <label>Brand</label>
             <input
               type="text"
-              placeholder="BMW,Audi,Verna"
+              placeholder="BMW, Audi, Verna"
               required
               className="px-3 py-2 mt-1 border borderColor rounded-md outline-none"
               value={car.brand}
@@ -65,7 +106,7 @@ const AddCar = () => {
             <label>Model</label>
             <input
               type="text"
-              placeholder="Verna XO , M series"
+              placeholder="Verna XO, M series"
               required
               className="px-3 py-2 mt-1 border borderColor rounded-md outline-none"
               value={car.model}
@@ -73,13 +114,14 @@ const AddCar = () => {
             />
           </div>
         </div>
-        {/* Car Year,Price,Category */}
+
+        {/* Car Year, Price, Category */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div className="flex flex-col w-full">
             <label>Year</label>
             <input
               type="number"
-              placeholder="2K25"
+              placeholder="2025"
               required
               className="px-3 py-2 mt-1 border borderColor rounded-md outline-none"
               value={car.year}
@@ -87,7 +129,7 @@ const AddCar = () => {
             />
           </div>
           <div className="flex flex-col w-full">
-            <label>Daily Price</label>
+            <label>Daily Price ({currency})</label>
             <input
               type="number"
               placeholder="100"
@@ -112,13 +154,13 @@ const AddCar = () => {
           </div>
         </div>
 
-        {/* Car Transmission, Fuel type, Seating Capacity */}
+        {/* Transmission, Fuel type, Seating Capacity */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div className="flex flex-col w-full">
-            <label> Transmission</label>
+            <label>Transmission</label>
             <select
-              onChange={(e) => setCar({ ...car, transimssion: e.target.value })}
-              value={car.transimssion}
+              onChange={(e) => setCar({ ...car, transmission: e.target.value })}
+              value={car.transmission}
               className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none"
             >
               <option value="">Select a Transmission</option>
@@ -128,13 +170,13 @@ const AddCar = () => {
             </select>
           </div>
           <div className="flex flex-col w-full">
-            <label> Fuel Type</label>
+            <label>Fuel Type</label>
             <select
               onChange={(e) => setCar({ ...car, fuel_type: e.target.value })}
               value={car.fuel_type}
               className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none"
             >
-              <option value="">Select a Fuel tye</option>
+              <option value="">Select a Fuel type</option>
               <option value="Gas">Gas</option>
               <option value="Diesel">Diesel</option>
               <option value="Petrol">Petrol</option>
@@ -151,16 +193,15 @@ const AddCar = () => {
               className="px-3 py-2 mt-1 border borderColor rounded-md outline-none"
               value={car.seating_capacity}
               onChange={(e) =>
-                setCar({ ...car, seating_capacity: e.target.value })
+                setCar({ ...car, seat_capacity: e.target.value })
               }
             />
           </div>
         </div>
 
-        {/*Car Location */}
-
+        {/* Location */}
         <div className="flex flex-col w-full">
-          <label> Location</label>
+          <label>Location</label>
           <select
             onChange={(e) => setCar({ ...car, location: e.target.value })}
             value={car.location}
@@ -173,7 +214,8 @@ const AddCar = () => {
             <option value="Chicago">Chicago</option>
           </select>
         </div>
-        {/*Car Description */}
+
+        {/* Description */}
         <div className="flex flex-col w-full">
           <label>Description</label>
           <textarea
@@ -181,13 +223,14 @@ const AddCar = () => {
             placeholder="A branded Verna type car with top speed of 205"
             required
             className="px-3 py-2 mt-1 border borderColor rounded-md outline-none"
-            value={car.decription}
-            onChange={(e) => setCar({ ...car, decription: e.target.value })}
+            value={car.description}
+            onChange={(e) => setCar({ ...car, description: e.target.value })}
           ></textarea>
         </div>
+
         <button className="flex items-center gap-2 px-4 py-2.5 mt-4 bg-primary text-white rounded-md font-medium w-max cursor-pointer">
-          <img src={assets.tick_icon} />
-          List Your Car
+          <img src={assets.tick_icon} alt="tick" />
+          {isLoading ? "Listing.." : "List Your Car"}
         </button>
       </form>
     </div>
