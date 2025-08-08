@@ -17,8 +17,8 @@ const Hero = () => {
               onChange={(e) => setPickupLocation(e.target.value)}
             >
               <option value=""> Pickup Location</option>
-              {cityList.map((city, index) => (
-                <option key={index} value={city}>
+              {cityList.map((city) => (
+                <option key={city} value={city}>
                   {city}
                 </option>
               ))}

@@ -44,7 +44,7 @@ const Dashboard = () => {
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-8 max-w-3xl">
         {dashboardCards.map((value, index) => (
           <div
-            key="index"
+            key={index}
             className="flex gap-2 items-center justify-between p-4 rounded-md border border-borderColor"
           >
             <div>
