@@ -3,6 +3,7 @@ import { assets, menuLinks } from "../assets/assets";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
+import { motion } from "motion/react";
 const Navbar = () => {
   const { setShowLogin, user, logout, isOwner, axios, setIsOwner } =
     useAppContext();
@@ -23,7 +24,10 @@ const Navbar = () => {
     }
   };
   return (
-    <div
+    <motion.div
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
       className={`flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 text-gray-600 border-b border-borderColor relative transition-all   ${
         location.pathname === "/" && "bg-light"
       }`}
@@ -61,7 +65,7 @@ const Navbar = () => {
           </button>
           <button
             onClick={() => {
-              user ?  logout() : setShowLogin(true);
+              user ? logout() : setShowLogin(true);
             }}
             className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg"
           >
@@ -78,7 +82,7 @@ const Navbar = () => {
       >
         <img src={open ? assets.close_icon : assets.menu_icon} alt="menu"></img>
       </button>
-    </div>
+    </motion.div>
   );
 };
 
